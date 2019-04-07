@@ -1,0 +1,12 @@
+[package]
+name = "tidy"
+version = "0.1.0"
+authors = ["Hilmar Wiegand <me@hwgnd.de>"]
+edition = "2018"
+
+[dependencies]
+x11 = "2.18"
+xdg = "2.2"
+xcb = { version = "0.8", features = ["randr"] }
+xcb-util = { version = "0.2", features = ["icccm", "ewmh", "keysyms"] }
+
