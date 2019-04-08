@@ -36,6 +36,12 @@ pub enum WindowState {
     DemandsAttention,
 }
 
+pub struct Geometry {
+    pub pos: (i16, i16),
+    pub size: (u16, u16),
+    pub depth: u8,
+}
+
 macro_rules! atoms {
     ( $( $name:ident ),+ ) => {
         #[allow(non_snake_case)]
@@ -194,6 +200,18 @@ impl Client {
                     xcb::GRAB_MODE_ASYNC as u8,
                 );
             }
+        }
+    }
+
+    pub fn get_window_geometry(&self, window: xcb::Window) -> Geometry {
+        let geom = xcb::get_geometry(&self.connection, window)
+            .get_reply()
+            .expect("could not get window geometry");
+
+        Geometry {
+            pos: (geom.x(), geom.y()),
+            size: (geom.width(), geom.height()),
+            depth: geom.depth(),
         }
     }
 
